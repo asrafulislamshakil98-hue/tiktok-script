@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Detail</title>
+    <style>
+        body { background-color: #121212; color: white; font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; }
+        .back-btn { background: #333; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 20px; }
+        
+        .scene-card {
+            background: #1f1f1f;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #fe2c55;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .time-badge {
+            background: #fe2c55;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .action-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+<button class="back-btn" onclick="history.back()">← Back</button>
+<div id="detailContainer">
+    <!-- একটি সিনের উদাহরণ -->
+</div>     
+<script>
+    // ১. URL থেকে স্ক্রিপ্টের আইডি বের করা (যেমন: detail.html?id=65f...)
+    const params = new URLSearchParams(window.location.search);
+    const scriptId = params.get('id');
+    const apiBaseUrl = "http://localhost:5002/api";
+
+    async function loadScriptDetails() {
+        try {
+            const response = await fetch(`${apiBaseUrl}/script-detail/${scriptId}`);
+            const script = await response.json();
+
+            const detailContainer = document.getElementById('detailContainer');
+            detailContainer.innerHTML = `<h1>${script.title}</h1>`; // স্ক্রিপ্টের নাম
+
+            // ২. স্ক্রিপ্টের সিনগুলো লুপ করে দেখানো
+            script.scenes.forEach((scene) => {
+                const sceneCard = document.createElement('div');
+                sceneCard.className = 'scene-card';
+                sceneCard.innerHTML = `
+                    <div class="time-badge">${scene.time}</div>
+                    <div class="action-text">${scene.action}</div>
+                `;
+                detailContainer.appendChild(sceneCard);
+            });
+
+        } catch (error) {
+            console.error("Error loading details:", error);
+            alert("স্ক্রিপ্ট লোড করতে সমস্যা হয়েছে!");
+        }
+    }
+
+    // ফাংশনটি কল করা
+    if (scriptId) {
+        loadScriptDetails();
+    }
+</script>
+</html>

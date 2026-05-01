@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script List</title>
+    <style>
+        body { background-color: #121212; color: white; font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; }
+        .back-btn { background: #333; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 20px; }
+        .script-item { background: #1f1f1f; padding: 15px; margin-bottom: 10px; border-radius: 10px; cursor: pointer; border-left: 4px solid #fe2c55; }
+        .script-item:hover { background: #2a2a2a; }
+        h2 { color: #25f4ee; }
+    </style>
+</head>
+<body>
+
+<button class="back-btn" onclick="history.back()">← Back</button>
+<h2 id="catName">Category Scripts</h2>
+
+<div id="listContainer">
+    
+</div>
+
+</body>
+
+<script>
+    // ১. URL থেকে ক্যাটাগরির নাম বের করা (যেমন: scripts.html?cat=Funny)
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('cat');
+    const apiBaseUrl = "http://localhost:5002/api"; // আপনার নোড জেএস পোর্টের সাথে মিল রাখুন
+
+    // ২. পেজের টাইটেল সেট করা
+    if (category) {
+        document.getElementById('catName').innerText = category + " Scripts";
+    }
+
+    // ৩. ব্যাকএন্ড থেকে ডাটা ফেচ করা
+    async function loadScripts() {
+        try {
+            const response = await fetch(`${apiBaseUrl}/scripts/${category}`);
+            const scripts = await response.json();
+
+            const listContainer = document.getElementById('listContainer');
+            listContainer.innerHTML = ""; // আগের স্যাম্পল ডাটা মুছে ফেলা
+
+            if (scripts.length === 0) {
+                listContainer.innerHTML = "<p style='text-align:center;'>কোনো স্ক্রিপ্ট পাওয়া যায়নি।</p>";
+                return;
+            }
+
+            // ৪. লুপ চালিয়ে প্রতিটি স্ক্রিপ্ট কার্ড তৈরি করা
+            scripts.forEach((script, index) => {
+                const item = document.createElement('div');
+                item.className = 'script-item';
+                item.innerHTML = `<h3>${index + 1}. ${script.title}</h3>`;
+                
+                // ক্লিক করলে ডিটেইল পেজে আইডি নিয়ে যাবে
+                item.onclick = () => {
+                    window.location.href = `detail.html?id=${script._id}`;
+                };
+                
+                listContainer.appendChild(item);
+            });
+        } catch (error) {
+            console.error("Error loading scripts:", error);
+            alert("সার্ভার কানেক্ট হতে সমস্যা হচ্ছে!");
+        }
+    }
+
+    // ফাংশনটি কল করা
+    loadScripts();
+</script>
+</html>

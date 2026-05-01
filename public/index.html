@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Script App</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #000;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #fe2c55;
+            position: sticky;
+            top: 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            background: linear-gradient(45deg, #fe2c55, #25f4ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            background: #1f1f1f;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid #333;
+            transition: 0.3s;
+            text-decoration: none;
+            color: white;
+        }
+
+        .category-card:hover {
+            border-color: #fe2c55;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 400px) {
+            .container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>TIKTOK SCRIPTS</h1>
+</header>
+
+<div class="container">
+    <a href="scripts.html?cat=Funny" class="category-card">Funny 😂</a>
+    <a href="scripts.html?cat=Emotional" class="category-card">Emotional 😢</a>
+    <a href="scripts.html?cat=Attitude" class="category-card">Attitude 😎</a>
+    <a href="scripts.html?cat=Motivation" class="category-card">Motivation 🔥</a>
+    <a href="scripts.html?cat=Love" class="category-card">Love ❤️</a>
+    <a href="scripts.html?cat=Comedy" class="category-card">Comedy 🎭</a>
+    <a href="scripts.html?cat=Action" class="category-card">Action 🎬</a>
+    <a href="scripts.html?cat=Educational" class="category-card">Educational 📚</a>
+    <a href="scripts.html?cat=Vlog" class="category-card">Vlog 🤳</a>
+    <a href="scripts.html?cat=Gaming" class="category-card">Gaming 🎮</a>
+</div>
+
+</body>
+</html>
